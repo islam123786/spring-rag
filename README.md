@@ -59,7 +59,14 @@
 
 # Run the Project and run the below query from postman
 
-<img width="798" height="368" alt="image" src="https://github.com/user-attachments/assets/e043f1f2-64c3-4b6c-8bb4-4d2230e56601" />
+Once the project runs and the below message is visible
+
+<img width="343" height="53" alt="image" src="https://github.com/user-attachments/assets/6e507ce1-e571-4d8c-84d0-a90b01e8b954" />
+
+Run the below Query from postman
+
+<img width="1453" height="788" alt="image" src="https://github.com/user-attachments/assets/1ad0b939-0ddb-45c7-819f-a695c1a85494" />
+
 
 
 
