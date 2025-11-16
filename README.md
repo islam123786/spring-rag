@@ -1,0 +1,68 @@
+## This Projects creates a RAG pipeline using:
+ 1. SpringBoot
+ 2. Vector Embedding via text-embedding-nomic-embed-text-v2-moe (LM Studio-Local)
+ 3. Postgres as Vector DB
+ 4. Spring AI to generate response with GPT-3.5
+
+# Run and Setup Embedding Model:
+ 1. Open LM Studio and run the embedding model "text-embedding-nomic-embed-text-v2-moe".
+ 2. Open Postman and run the query to see the vector embedding, set "Content-type" as "application/json" under Headers tab
+
+   <img width="1429" height="862" alt="image" src="https://github.com/user-attachments/assets/53cd98c6-5c42-44c2-8350-c53764bd89ab" />
+
+# Install Postgres with pgvector
+
+ ```
+  brew install postgresql@17
+
+  brew services start postgresql@17
+
+  psql postgres
+
+  CREATE DATABASE demo_rag;
+
+  \c demo_rag
+
+  -- Enable required extensions
+  CREATE EXTENSION IF NOT EXISTS vector;
+  CREATE EXTENSION IF NOT EXISTS hstore;
+  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+  -- Create the table to store our documents and embeddings
+  CREATE TABLE IF NOT EXISTS vector_store (
+    id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    content text,
+    metadata json,
+    embedding vector(768)
+  );
+
+  CREATE INDEX ON vector_store USING HNSW (embedding vector_cosine_ops);
+  ```
+# Create new Springboot project
+1. Add all the below dependencies and options as shown below
+  <img width="1528" height="811" alt="image" src="https://github.com/user-attachments/assets/2c5e9346-e941-4f65-8bb1-2303a50beaf4" />
+
+2. Add the below dependecy as well 
+  ```
+    <dependency>
+			  <groupId>io.projectreactor.netty</groupId>
+			  <artifactId>reactor-netty-http</artifactId>
+		</dependency>
+  ```
+3. Add all the below files
+   DocumentLoader
+   RagController
+   RagService
+   pdf/spring-boot-reference.pdf
+   prompts/rag-prompt.st
+   application.properties (create the API Key from https://openrouter.ai/api and replace <API_KEY>)
+
+# Run the Project and run the below query from postman
+
+<img width="798" height="368" alt="image" src="https://github.com/user-attachments/assets/e043f1f2-64c3-4b6c-8bb4-4d2230e56601" />
+
+
+
+
+
+
