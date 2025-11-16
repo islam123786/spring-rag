@@ -50,12 +50,12 @@
 		</dependency>
   ```
 3. Add all the below files
-   DocumentLoader
-   RagController
-   RagService
-   pdf/spring-boot-reference.pdf
-   prompts/rag-prompt.st
-   application.properties (create the API Key from https://openrouter.ai/api and replace <API_KEY>)
+   1. DocumentLoader
+   2. RagController
+   3. RagService
+   4. pdf/spring-boot-reference.pdf
+   5. prompts/rag-prompt.st
+   6. application.properties (create the API Key from https://openrouter.ai/api and replace <API_KEY>)
 
 # Run the Project and run the below query from postman
 
