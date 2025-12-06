@@ -68,7 +68,68 @@ Run the below Query from postman
 <img width="1453" height="788" alt="image" src="https://github.com/user-attachments/assets/1ad0b939-0ddb-45c7-819f-a695c1a85494" />
 
 
+# Implemented Flow
+```
+Generation Pipeline:
+ Document Upload (PDF, DOCX, PPT)
+         ↓
+ TikaDocumentReader: Converts PDF/DOCX/etc into plain text
+         ↓
+ TokenTextSplitter: Splits text into token-efficient chunks
+         ↓
+ Vector Embedding via text-embedding-nomic-embed-text-v2-moe (LM Studio-Local)
+         ↓
+ Postgres as Vector DB
 
+
+Query Pipeline:
+ User sends a query
+        ↓
+ Query is converted to an embedding.
+        ↓
+ Vector store retrieves (top-k relevant chunks)
+        ↓
+ Chunks are inserted into a prompt.
+        ↓
+ LLM generates an answer using retrieved context
+        ↓
+ User receives grounded response
+```
+
+
+# Flow with AWS service
+```
+Generation Pipeline:
+ S3: Document Upload (PDF, DOCX, PPT)
+         ↓
+ Lambda + Apache Tikke: Converts PDF/DOCX/etc into plain text
+         ↓
+    S3: RAW Data
+         ↓
+ Glue / Lambda: Clean & Normalize data
+         ↓
+ Lambda + TokenTextSplitter: Splits text into token-efficient chunks
+         ↓
+ Use Trained model from Amazon Bedrock to create vector embedding
+         ↓
+ OpenSearch Serverless
+
+
+Query Pipeline:
+ User sends a query to API Gateway
+        ↓
+ AWS Lambda: Query Processing
+        ↓
+ Amazon Bedrock: Query is converted to an embedding.
+        ↓
+ OpenSearch Serverless (top-k relevant chunks)
+        ↓
+ AWS Lambda: Chunks are inserted into a prompt.
+        ↓
+ AWS Bedrock: LLM answer generation.
+        ↓
+ Answer is returned to user via API Gateway.
+```
 
 
 
